@@ -1,6 +1,6 @@
 {
-    "name": "Extension",
-    "rootNamespace": "Extension",
+    "name": "Extensions",
+    "rootNamespace": "Extensions",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
