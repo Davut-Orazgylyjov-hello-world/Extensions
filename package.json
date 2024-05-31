@@ -1,0 +1,14 @@
+{
+  "name": "com.OrazgylyjovFuteres.Extension",
+  "version": "1.0.0",
+  "displayName": "Orazgylyjov Extension",
+  "description": "Extensions for all projects",
+  "unity": "2019.1",
+  "keywords": [
+    "Extension",
+    "upm"
+  ],
+  "author": {
+    "name": "Orazgylyjov Davut"
+  }
+}
