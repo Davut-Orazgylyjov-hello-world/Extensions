@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Extension
@@ -5,14 +6,15 @@ namespace Extension
     public static class RendererExtensions
     {
         public static readonly Color NoColor = Color.clear;
+        
         public static Material[] GetMaterials(this Renderer[] renderers)
         {
-            Material[] materials = new Material [renderers.Length];
+            List<Material> materials = new List<Material>();
 
-            for (int i = 0; i < renderers.Length; i++)
-                materials[i] = renderers[i].material;
+            foreach (var t in renderers)
+                materials.AddRange(t.materials);
 
-            return materials;
+            return materials.ToArray();
         }
 
         public static Color[] GetMaterialsColor(this Renderer[] renderers)
@@ -30,10 +32,43 @@ namespace Extension
             return colors;
         }
 
-        public static void SetMaterial(this Renderer[] renderers, Material material)
+        public static void SetMaterials(this Renderer[] renderers, params Material[] materials)
         {
+            int indexMaterial = 0;
+
             foreach (var renderer in renderers)
-                renderer.material = material;
+            {
+                int lengthMaterialsInMesh = renderer.materials.Length;
+                var materialsMesh = new Material[lengthMaterialsInMesh];
+
+                for (int i = 0; i < lengthMaterialsInMesh; i++, indexMaterial++)
+                {
+                    if (indexMaterial >= materials.Length)
+                        materialsMesh[i] = materials[^1];
+                    else
+                        materialsMesh[i] = materials[indexMaterial];
+                }
+
+                renderer.materials = materialsMesh;
+            }
+        }
+        
+        public static void SetMaterialColors(this Renderer[] renderers, params Color[] materials)
+        {
+            int indexMaterial = 0;
+
+            foreach (var renderer in renderers)
+            {
+                var materialsMesh = renderer.materials;
+
+                for (int i = 0; i < materialsMesh.Length; i++, indexMaterial++)
+                {
+                    materialsMesh[i].color =
+                        indexMaterial >= materials.Length ? materials[^1] : materials[indexMaterial];
+                }
+
+                renderer.materials = materialsMesh;
+            }
         }
         
         public static void SetColorLerp(this Renderer[] renderers, Color color , Color[] renderersColors, float lerp, string ignoreTag)
