@@ -6,7 +6,7 @@ namespace Extension
     public static class RendererExtensions
     {
         public static readonly Color NoColor = Color.clear;
-        
+
         public static Material[] GetMaterials(this Renderer[] renderers)
         {
             List<Material> materials = new List<Material>();
@@ -25,7 +25,7 @@ namespace Extension
             {
                 if (renderers[i].material.HasColor("_Color"))
                     colors[i] = renderers[i].material.color;
-                else 
+                else
                     colors[i] = NoColor;
             }
 
@@ -52,7 +52,7 @@ namespace Extension
                 renderer.materials = materialsMesh;
             }
         }
-        
+
         public static void SetMaterialColors(this Renderer[] renderers, params Color[] materials)
         {
             int indexMaterial = 0;
@@ -70,8 +70,9 @@ namespace Extension
                 renderer.materials = materialsMesh;
             }
         }
-        
-        public static void SetColorLerp(this Renderer[] renderers, Color color , Color[] renderersColors, float lerp, string ignoreTag)
+
+        public static void SetColorLerp(this Renderer[] renderers, Color color, Color[] renderersColors, float lerp,
+            string ignoreTag)
         {
             for (var i = 0; i < renderers.Length; i++)
             {
@@ -82,17 +83,32 @@ namespace Extension
                 }
             }
         }
-        
+
         public static Material GetSameMaterial(this Renderer render, Material sameMaterial)
         {
             for (int i = 0; i < render.materials.Length - 1; i++)
             {
-                if (render.materials[i].IsSame( sameMaterial))
+                if (render.materials[i].IsSame(sameMaterial))
                     return render.materials[i];
             }
 
             Debug.LogError("No Material was Found");
             return null;
+        }
+
+        public static Material[] GetSameMaterials(this Renderer[] renderer, Material sameMaterial)
+        {
+            var materials = new List<Material>();
+            foreach (var t in renderer)
+            {
+                var material = t.GetSameMaterial(sameMaterial);
+                if (material != null)
+                {
+                    materials.Add(material);
+                }
+            }
+
+            return materials.ToArray();
         }
     }
 }
