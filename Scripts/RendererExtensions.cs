@@ -86,7 +86,7 @@ namespace Extension
 
         public static Material GetSameMaterial(this Renderer render, Material sameMaterial)
         {
-            for (int i = 0; i < render.materials.Length - 1; i++)
+            for (int i = 0; i < render.materials.Length; i++)
             {
                 if (render.materials[i].IsSame(sameMaterial))
                     return render.materials[i];
