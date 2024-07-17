@@ -76,9 +76,10 @@ namespace Extension
         {
             for (var i = 0; i < renderers.Length; i++)
             {
+                if(renderers[i] == null) continue;
                 if (!renderers[i].CompareTag(ignoreTag))
                 {
-                    if (renderersColors[i] != RendererExtensions.NoColor)
+                    if (renderersColors[i] != NoColor)
                         renderers[i].material.color = Color.Lerp(renderersColors[i], color, lerp);
                 }
             }
