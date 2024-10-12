@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Extension
 {
-    public static class LayerExtensions 
+    public static class LayerExtensions
     {
         public static int LayerMaskToLayer(this LayerMask layerMask)
         {
@@ -15,6 +15,15 @@ namespace Extension
             }
 
             return layerNumber - 1;
+        }
+
+        public static void ChangeAllChildLayerMask(this Transform transform, LayerMask toLayer)
+        {
+            foreach (Transform child in transform)
+            {
+                child.gameObject.layer = toLayer;
+                transform.ChangeAllChildLayerMask(toLayer);
+            }
         }
     }
 }
