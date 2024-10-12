@@ -22,7 +22,7 @@ namespace Extension
             foreach (Transform child in transform)
             {
                 child.gameObject.layer = toLayer;
-                transform.ChangeAllChildLayerMask(toLayer);
+                child.ChangeAllChildLayerMask(toLayer);
             }
         }
     }
