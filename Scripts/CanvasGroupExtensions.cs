@@ -10,6 +10,17 @@ namespace Extension
             yield return active ? ActivateSmooth(canvasGroup, speed) : DeactivateSmooth(canvasGroup, speed);
         }
 
+        public static IEnumerator FadeAndOut(this CanvasGroup canvasGroup, float speed)
+        {
+            canvasGroup.gameObject.SetActive(true);
+
+            canvasGroup.alpha = 1;
+
+            yield return DeactivateSmooth(canvasGroup, speed);
+
+            canvasGroup.gameObject.SetActive(false);
+        }
+
         public static IEnumerator ActivateSmooth(this CanvasGroup canvasGroup, float speed = 1f)
         {
             float startAlpha = canvasGroup.alpha;
