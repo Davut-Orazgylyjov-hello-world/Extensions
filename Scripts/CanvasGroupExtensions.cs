@@ -12,38 +12,44 @@ namespace Extension
 
         public static IEnumerator ActivateSmooth(this CanvasGroup canvasGroup, float speed = 1f)
         {
-            float smoothOn = canvasGroup.alpha;
+            float startAlpha = canvasGroup.alpha;
+            float elapsedTime = 0f;
+            float duration = (1f - startAlpha) / speed;
 
             canvasGroup.interactable = true;
-
             canvasGroup.blocksRaycasts = true;
 
-            while (smoothOn < 1)
+            while (elapsedTime < duration)
             {
-                smoothOn += Time.deltaTime * speed;
-
+                elapsedTime += Time.unscaledDeltaTime;
+                float smoothOn = Mathf.Lerp(startAlpha, 1f, elapsedTime / duration);
                 canvasGroup.alpha = smoothOn;
 
                 yield return null;
             }
+
+            canvasGroup.alpha = 1;
         }
 
         public static IEnumerator DeactivateSmooth(this CanvasGroup canvasGroup, float speed = 1f)
         {
-            float smoothOff = canvasGroup.alpha;
+            float startAlpha = canvasGroup.alpha;
+            float elapsedTime = 0f;
+            float duration = startAlpha / speed;
 
             canvasGroup.interactable = false;
-
             canvasGroup.blocksRaycasts = false;
 
-            while (smoothOff > 0)
+            while (elapsedTime < duration)
             {
-                smoothOff -= Time.deltaTime * speed;
-
+                elapsedTime += Time.unscaledDeltaTime;
+                float smoothOff = Mathf.Lerp(startAlpha, 0f, elapsedTime / duration);
                 canvasGroup.alpha = smoothOff;
 
                 yield return null;
             }
+
+            canvasGroup.alpha = 0;
         }
 
         public static void SetActive(this CanvasGroup canvasGroup, bool active)
